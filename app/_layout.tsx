@@ -1,56 +1,34 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { Tabs } from 'expo-router'
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+type Props = {}
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
-  });
-
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+const index = (props: Props) => {
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
-  );
+    <Tabs
+      // detachInactiveScreens
+      // sceneContainerStyle={{backgroundColor: '#ccc', padding: 55}}
+
+      // if applying to all of them
+      screenOptions={{
+        headerShown: false,
+        // tabBarStyle: {backgroundColor:'red'},
+      }}
+    >
+      <Tabs.Screen name="index"
+        options={{
+          title: "Home",
+          // tabBarIcon: ({ focused, color, size }) => <Text>{size}</Text>
+        }} />
+      <Tabs.Screen name="Inbox" options={{ title: "Page 1" }} />
+      <Tabs.Screen name="Transactions" options={{ title: "Page 2" }} /> 
+      <Tabs.Screen name="Profile" options={{ title: "Page 3" }} /> 
+    </Tabs>
+  )
 }
+
+export default index
+
+const styles = StyleSheet.create({})
