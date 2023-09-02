@@ -1,9 +1,8 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
+import { StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export {
@@ -44,16 +43,14 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar backgroundColor={'gray'} />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name='screens/modal' options={{ animation: 'slide_from_right', title: 'Modal', headerShown: true }} />
+          <Stack.Screen name='screens/send' options={{ contentStyle: {backgroundColor: '#eee'}, presentation: 'transparentModal', animation: 'slide_from_right', title: 'Modal', headerShown: true }} />
+          <Stack.Screen name='screens/cashIn' options={{ contentStyle: {backgroundColor: '#eee'}, presentation: 'containedTransparentModal', animation: 'slide_from_right', title: 'Cash In', headerShown: true }} />
         </Stack>
       </SafeAreaView>
-    </ThemeProvider>
   );
 }
